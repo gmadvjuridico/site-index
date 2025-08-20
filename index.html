@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MR Advogados</title>
+  <meta name="description" content="MR Advogados — Especialistas em advocacia bancária, empresarial, médica e do agronegócio." />
+
+  <!-- Tailwind (para utilitários) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style id="app-css">
+    :root{
+      --radius:0.625rem;
+      --background:oklch(1 0 0);
+      --foreground:oklch(0.145 0 0);
+      --card:oklch(1 0 0);
+      --card-foreground:oklch(0.145 0 0);
+      --popover:oklch(1 0 0);
+      --popover-foreground:oklch(0.145 0 0);
+      --primary:oklch(0.205 0 0);
+      --primary-foreground:oklch(0.985 0 0);
+      --secondary:oklch(0.97 0 0);
+      --secondary-foreground:oklch(0.205 0 0);
+      --muted:oklch(0.97 0 0);
+      --muted-foreground:oklch(0.556 0 0);
+      --accent:oklch(0.97 0 0);
+      --accent-foreground:oklch(0.205 0 0);
+      --destructive:oklch(0.577 0.245 27.325);
+      --border:oklch(0.922 0 0);
+      --input:oklch(0.922 0 0);
+      --ring:oklch(0.708 0 0);
+      --chart-1:oklch(0.646 0.222 41.116);
+      --chart-2:oklch(0.6 0.118 184.704);
+      --chart-3:oklch(0.398 0.07 227.392);
+      --chart-4:oklch(0.828 0.189 84.429);
+      --chart-5:oklch(0.769 0.188 70.08);
+      --sidebar:oklch(0.985 0 0);
+      --sidebar-foreground:oklch(0.145 0 0);
+      --sidebar-primary:oklch(0.205 0 0);
+      --sidebar-primary-foreground:oklch(0.985 0 0);
+      --sidebar-accent:oklch(0.97 0 0);
+      --sidebar-accent-foreground:oklch(0.205 0 0);
+      --sidebar-border:oklch(0.922 0 0);
+      --sidebar-ring:oklch(0.708 0 0);
+    }
+    html.dark{
+      --background:oklch(0.145 0 0);
+      --foreground:oklch(0.985 0 0);
+      --card:oklch(0.205 0 0);
+      --card-foreground:oklch(0.985 0 0);
+      --popover:oklch(0.205 0 0);
+      --popover-foreground:oklch(0.985 0 0);
+      --primary:oklch(0.922 0 0);
+      --primary-foreground:oklch(0.205 0 0);
+      --secondary:oklch(0.269 0 0);
+      --secondary-foreground:oklch(0.985 0 0);
+      --muted:oklch(0.269 0 0);
+      --muted-foreground:oklch(0.708 0 0);
+      --accent:oklch(0.269 0 0);
+      --accent-foreground:oklch(0.985 0 0);
+      --destructive:oklch(0.704 0.191 22.216);
+      --border:oklch(1 0 0 / 10%);
+      --input:oklch(1 0 0 / 15%);
+      --ring:oklch(0.556 0 0);
+      --chart-1:oklch(0.488 0.243 264.376);
+      --chart-2:oklch(0.696 0.17 162.48);
+      --chart-3:oklch(0.769 0.188 70.08);
+      --chart-4:oklch(0.627 0.265 303.9);
+      --chart-5:oklch(0.645 0.246 16.439);
+      --sidebar:oklch(0.205 0 0);
+      --sidebar-foreground:oklch(0.985 0 0);
+      --sidebar-primary:oklch(0.488 0.243 264.376);
+      --sidebar-primary-foreground:oklch(0.985 0 0);
+      --sidebar-accent:oklch(0.269 0 0);
+      --sidebar-accent-foreground:oklch(0.985 0 0);
+      --sidebar-border:oklch(1 0 0 / 10%);
+      --sidebar-ring:oklch(0.556 0 0);
+    }
+
+    * { border-color: var(--border); outline-color: color-mix(in oklab, var(--ring), transparent 50%); }
+    body { background: var(--background); color: var(--foreground); }
+    html { scroll-behavior: smooth; }
+
+    /* Pequenos utilitários para consumir os tokens (se quiser usar nas classes) */
+    .bg-background{ background-color: var(--background); }
+    .text-foreground{ color: var(--foreground); }
+    .bg-card{ background-color: var(--card); }
+    .text-card-foreground{ color: var(--card-foreground); }
+    .bg-popover{ background-color: var(--popover); }
+    .text-popover-foreground{ color: var(--popover-foreground); }
+    .bg-primary{ background-color: var(--primary); }
+    .text-primary-foreground{ color: var(--primary-foreground); }
+    .bg-secondary{ background-color: var(--secondary); }
+    .text-secondary-foreground{ color: var(--secondary-foreground); }
+    .bg-muted{ background-color: var(--muted); }
+    .text-muted-foreground{ color: var(--muted-foreground); }
+    .bg-accent{ background-color: var(--accent); }
+    .text-accent-foreground{ color: var(--accent-foreground); }
+    .border-border{ border-color: var(--border); }
+    .ring-ring{ --tw-ring-color: var(--ring); }
+    .rounded-sm{ border-radius: calc(var(--radius) - 4px); }
+    .rounded-md{ border-radius: calc(var(--radius) - 2px); }
+    .rounded-lg{ border-radius: var(--radius); }
+    .rounded-xl{ border-radius: calc(var(--radius) + 4px); }
+
+    .header-bg{
+      background-color: #2F2F30;
+    }
+
+    .background-home{
+      background-color: #2F2F30;
+      opacity: 0.7;
+    }
+
+    /* Botão Fale Conosco - Animações otimizadas */
+    .btn-contato {
+      background-color: #2F2F30;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform, background-color, box-shadow;
+    }
+
+    .btn-contato:hover {
+      background-color: #4A4A4B;
+      transform: translateZ(0) scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    /* Botão Entrar em Contato - Mesmo estilo do Fale Conosco */
+    .btn-entrar-contato {
+      background-color: #2F2F30;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform, background-color, box-shadow;
+    }
+
+    .btn-entrar-contato:hover {
+      background-color: #4A4A4B;
+      transform: translateZ(0) scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+
+<!-- Adicione 'dark' aqui para ativar tema escuro: <html class="dark"> -->
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header class="header-bg">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <img src="./assets/logo.png" alt="MR Advogados" class="h-8 w-100">
+        </div>
+        <nav class="hidden md:flex space-x-6">
+          <a href="#inicio" class="text-white">Início</a>
+          <a href="#sobre" class="text-white">Sobre</a>
+          <a href="#servicos" class="text-white">Serviços</a>
+          <a href="#contato" class="text-white">Contato</a>
+        </nav>
+        <button id="menuBtn" class="md:hidden rounded-md p-2 hover:bg-white/10" aria-label="Abrir menu">
+          <svg width="24" height="24" stroke="currentColor" fill="none" class="text-white">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <nav id="mobileNav" class="mt-3 hidden flex-col gap-2 md:hidden">
+        <a href="#inicio" class="block px-2 py-2 rounded hover:bg-white/10">Início</a>
+        <a href="#sobre" class="block px-2 py-2 rounded hover:bg-white/10">Sobre</a>
+        <a href="#servicos" class="block px-2 py-2 rounded hover:bg-white/10">Serviços</a>
+        <a href="#contato" class="block px-2 py-2 rounded hover:bg-white/10">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="inicio" class="relative h-[90vh] min-h-[560px] flex items-center justify-center" style="background-color: #666666;">
+    <div class="absolute inset-0">
+      <div class="background-home"></div>
+    </div>
+    <div class="relative z-10 text-center text-white px-4">
+      <h2 class="text-5xl md:text-6xl font-bold mb-4">MR Advogados</h2>
+      <p class="text-xl md:text-2xl text-white mb-2"">Advocacia Bancária</p>
+      <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+        Sua defesa é nossa prioridade. Especialistas em direito bancário, empresarial, médico e do agronegócio.
+      </p>
+      <a href="#contato" class="btn-contato font-bold py-3 px-8 rounded-lg text-lg inline-block text-white">
+        Fale Conosco
+      </a>
+    </div>
+  </section>
+
+  <!-- Sobre -->
+  <section id="sobre" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h3 class="text-3xl md:text-4xl font-bold mb-4" style="color: #2F2F30;">Sobre Nós</h3>
+          <div class="w-24 h-1 mx-auto mb-6" style="background-color: #2F2F30;"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+              O MR Advogados é um escritório especializado em advocacia bancária, oferecendo soluções jurídicas personalizadas para pessoas físicas e jurídicas. Nossa equipe de advogados experientes atua com foco na proteção patrimonial e na defesa dos direitos de nossos clientes.
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed">
+              Com atendimento online e imediato, proporcionamos tranquilidade e segurança jurídica em todas as etapas do processo, sempre priorizando a melhor estratégia para cada caso específico.
+            </p>
+          </div>
+          <div class="text-center">
+            <img src="./assets/imagem2.jpeg" alt="Sobre nós" class="rounded-lg shadow-lg mx-auto max-w-full h-auto">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Serviços -->
+  <section id="servicos" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4" style="color: #2F2F30;">Nossos Serviços</h3>
+        <div class="w-24 h-1 mx-auto mb-6" style="background-color: #2F2F30;"></div>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Oferecemos soluções jurídicas especializadas para proteger seus direitos e seu patrimônio
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-gray-50 p-6 rounded-lg text-center hover:shadow-lg transition-shadow">
+          <i data-lucide="users" class="h-12 w-12 mx-auto mb-4" style="color: #2F2F30;"></i>
+          <h4 class="text-xl font-bold mb-3" style="color: #2F2F30;">Superendividamento de Servidores Públicos</h4>
+          <p class="text-gray-600">Reorganização financeira através da Lei do Superendividamento, garantindo renegociação justa.</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-lg text-center hover:shadow-lg transition-shadow">
+          <i data-lucide="shield" class="h-12 w-12 mx-auto mb-4" style="color: #2F2F30;"></i>
+          <h4 class="text-xl font-bold mb-3" style="color: #2F2F30;">Gestão de Passivo Bancário</h4>
+          <p class="text-gray-600">Estratégias especializadas para renegociação de dívidas bancárias e proteção patrimonial.</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-lg text-center hover:shadow-lg transition-shadow">
+          <i data-lucide="briefcase" class="h-12 w-12 mx-auto mb-4" style="color: #2F2F30;"></i>
+          <h4 class="text-xl font-bold mb-3" style="color: #2F2F30;">Endividamento Rural</h4>
+          <p class="text-gray-600">Assessoria completa para produtores rurais, incluindo prorrogação de financiamentos.</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-lg text-center hover:shadow-lg transition-shadow">
+          <i data-lucide="heart" class="h-12 w-12 mx-auto mb-4" style="color: #2F2F30;"></i>
+          <h4 class="text-xl font-bold mb-3" style="color: #2F2F30;">Consultoria para Médicos</h4>
+          <p class="text-gray-600">Proteção jurídica completa para profissionais da saúde e adequação à LGPD.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Por que escolher -->
+  <section class="py-16 text-white" style="background-color: #2F2F30;">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4">Por Que Escolher o MR Advogados?</h3>
+        <div class="w-24 h-1 bg-white mx-auto mb-6"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #666666;">
+            <i data-lucide="scale" class="h-8 w-8 text-white"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-3">Especialização</h4>
+          <p class="text-blue-100">Foco em direito bancário e áreas correlatas</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #666666;">
+            <i data-lucide="shield" class="h-8 w-8 text-white"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-3">Experiência</h4>
+          <p class="text-blue-100">Equipe com vasta experiência em negociações bancárias</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background-color: #666666;">
+            <i data-lucide="users" class="h-8 w-8 text-white"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-3">Atendimento Personalizado</h4>
+          <p class="text-blue-100">Cada caso é tratado de forma única</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4" style="color: #2F2F30;">Entre em Contato</h3>
+        <div class="w-24 h-1 mx-auto mb-6" style="background-color: #2F2F30;"></div>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Descubra como podemos ajudar a proteger seus direitos e seu patrimônio
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div>
+          <img src="./assets/imagem1.jpg" alt="Consultoria Jurídica" class="rounded-lg shadow-lg w-full h-64 object-cover mb-6" />
+
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+              <i data-lucide="map-pin" class="h-6 w-6" style="color: #2F2F30;"></i>
+              <div>
+                <p class="font-semibold" style="color: #2F2F30;">Endereço</p>
+                <p class="text-gray-600">Rua Padre Anchieta, 1888, Centro<br/>Franca, SP - CEP: 14400-740</p>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <i data-lucide="briefcase" class="h-6 w-6" style="color: #2F2F30;"></i>
+              <div>
+                <p class="font-semibold" style="color: #2F2F30;">CNPJ</p>
+                <p class="text-gray-600">57.021.679/0001-12</p>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <i data-lucide="mail" class="h-6 w-6" style="color: #2F2F30;"></i>
+              <div>
+                <p class="font-semibold" style="color: #2F2F30;">E-mail</p>
+                <p class="text-gray-600"><a href="mailto:contato@mradvogados.com" class="hover:underline">contato@mradvogados.com</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <form id="contactForm" class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
+              <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" />
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
+              <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" />
+            </div>
+
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
+              <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" />
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensagem</label>
+              <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"></textarea>
+            </div>
+
+                         <button type="submit" class="btn-entrar-contato w-full text-white font-bold py-3 px-6 rounded-lg">
+              Entrar em contato
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-white py-8" style="background-color: #2F2F30;">
+    <div class="container mx-auto px-4">
+      <div class="text-center">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+          <img src="./assets/logo.png" alt="MR Advogados" class="h-20 w-100">
+        </div>
+        <p class="text-gray-300 mb-4">Advocacia Bancária - Sua defesa é nossa prioridade</p>
+        <p class="text-sm text-gray-300">© 2025 MR Advogados. Todos os direitos reservados.</p>
+        <p class="text-sm text-gray-300">CNPJ: 57.021.679/0001-12</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Render ícones
+    lucide.createIcons();
+
+    // Menu mobile
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (menuBtn && mobileNav) {
+      menuBtn.addEventListener('click', () => mobileNav.classList.toggle('hidden'));
+    }
+
+    // Formulário
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Obrigado pelo contato! Entraremos em contato em breve.');
+      form.reset();
+    });
+
+    // (Opcional) Toggle de tema para teste:
+    // document.documentElement.classList.toggle('dark');
+  </script>
+</body>
+</html>
